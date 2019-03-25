@@ -51,7 +51,9 @@ struct RTPS_DllAPI SequenceNumber_t
     /*!
      * @brief Copy constructor.
      */
-    SequenceNumber_t(const SequenceNumber_t& seq) : high(seq.high), low(seq.low)
+    SequenceNumber_t(const SequenceNumber_t& seq)
+        : high(seq.high)
+        , low(seq.low)
     {
     }
 
@@ -59,7 +61,9 @@ struct RTPS_DllAPI SequenceNumber_t
      * @param hi
      * @param lo
      */
-    SequenceNumber_t(int32_t hi, uint32_t lo): high(hi),low(lo)
+    SequenceNumber_t(int32_t hi, uint32_t lo)
+        : high(hi)
+        , low(lo)
     {
     }
 
@@ -90,9 +94,14 @@ struct RTPS_DllAPI SequenceNumber_t
     SequenceNumber_t& operator++()
     {
         if(low == UINT32_MAX)
-        { ++high; low = 0; }
+        {
+            ++high;
+            low = 0;
+        }
         else
+        {
             ++low;
+        }
 
         return *this;
     }
@@ -154,7 +163,9 @@ inline bool operator==(const SequenceNumber_t& sn1, const SequenceNumber_t& sn2)
 inline bool operator!=(const SequenceNumber_t& sn1, const SequenceNumber_t& sn2)
 {
     if(sn1.high == sn2.high && sn1.low == sn2.low)
+    {
         return false;
+    }
 
     return true;
 }
@@ -165,16 +176,24 @@ inline bool operator!=(const SequenceNumber_t& sn1, const SequenceNumber_t& sn2)
  * @param seq2 Second SequenceNumber_t to compare
  * @return True if the first SequenceNumber_t is greater than the second
  */
-inline bool operator>(const SequenceNumber_t& seq1, const SequenceNumber_t& seq2)
+inline bool operator>(
+        const SequenceNumber_t& seq1,
+        const SequenceNumber_t& seq2)
 {
     if(seq1.high > seq2.high)
+    {
         return true;
+    }
     else if(seq1.high < seq2.high)
+    {
         return false;
+    }
     else
     {
         if(seq1.low > seq2.low)
+        {
             return true;
+        }
     }
     return false;
 }
@@ -185,16 +204,24 @@ inline bool operator>(const SequenceNumber_t& seq1, const SequenceNumber_t& seq2
  * @param seq2 Second SequenceNumber_t to compare
  * @return True if the first SequenceNumber_t is less than the second
  */
-inline bool operator<(const SequenceNumber_t& seq1, const SequenceNumber_t& seq2)
+inline bool operator<(
+        const SequenceNumber_t& seq1,
+        const SequenceNumber_t& seq2)
 {
     if(seq1.high > seq2.high)
+    {
         return false;
+    }
     else if(seq1.high < seq2.high)
+    {
         return true;
+    }
     else
     {
         if(seq1.low < seq2.low)
+        {
             return true;
+        }
     }
     return false;
 }
@@ -205,16 +232,24 @@ inline bool operator<(const SequenceNumber_t& seq1, const SequenceNumber_t& seq2
  * @param seq2 Second SequenceNumber_t to compare
  * @return True if the first SequenceNumber_t is greater or equal than the second
  */
-inline bool operator>=(const SequenceNumber_t& seq1, const SequenceNumber_t& seq2)
+inline bool operator>=(
+        const SequenceNumber_t& seq1,
+        const SequenceNumber_t& seq2)
 {
     if(seq1.high > seq2.high)
+    {
         return true;
+    }
     else if(seq1.high < seq2.high)
+    {
         return false;
+    }
     else
     {
         if(seq1.low >= seq2.low)
+        {
             return true;
+        }
     }
     return false;
 }
@@ -225,16 +260,24 @@ inline bool operator>=(const SequenceNumber_t& seq1, const SequenceNumber_t& seq
  * @param seq2 Second SequenceNumber_t to compare
  * @return True if the first SequenceNumber_t is less or equal than the second
  */
-inline bool operator<=( const SequenceNumber_t& seq1, const  SequenceNumber_t& seq2)
+inline bool operator<=(
+        const SequenceNumber_t& seq1,
+        const SequenceNumber_t& seq2)
 {
     if(seq1.high > seq2.high)
+    {
         return false;
+    }
     else if(seq1.high < seq2.high)
+    {
         return true;
+    }
     else
     {
         if(seq1.low <= seq2.low)
+        {
             return true;
+        }
     }
     return false;
 }

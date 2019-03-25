@@ -36,9 +36,18 @@ namespace fastrtps{
 namespace rtps {
 
 
-StatelessWriter::StatelessWriter(RTPSParticipantImpl* pimpl,GUID_t& guid,
-        WriterAttributes& att,WriterHistory* hist,WriterListener* listen):
-    RTPSWriter(pimpl,guid,att,hist,listen)
+StatelessWriter::StatelessWriter(
+        RTPSParticipantImpl* pimpl,
+        GUID_t& guid,
+        WriterAttributes& att,
+        WriterHistory* hist,
+        WriterListener* listen)
+    : RTPSWriter(
+          pimpl,
+          guid,
+          att,
+          hist,
+          listen)
 {
     mAllRemoteReaders = get_builtin_guid();
 }
@@ -87,8 +96,13 @@ void StatelessWriter::unsent_change_added_to_history(CacheChange_t* cptr)
                 for (auto it = m_matched_readers.begin(); it != m_matched_readers.end(); ++it)
                 {
                     guids.at(0) = it->guid;
-                    RTPSMessageGroup group(mp_RTPSParticipant, this, RTPSMessageGroup::WRITER, m_cdrmessages,
-                        it->endpoint.unicastLocatorList, guids);
+                    RTPSMessageGroup group(
+                                mp_RTPSParticipant,
+                                this,
+                                RTPSMessageGroup::WRITER,
+                                m_cdrmessages,
+                                it->endpoint.unicastLocatorList,
+                                guids);
 
                     if (!group.add_data(*cptr, guids, it->endpoint.unicastLocatorList, false))
                     {
@@ -98,8 +112,13 @@ void StatelessWriter::unsent_change_added_to_history(CacheChange_t* cptr)
             }
             else
             {
-                RTPSMessageGroup group(mp_RTPSParticipant, this, RTPSMessageGroup::WRITER, m_cdrmessages,
-                    mAllShrinkedLocatorList, mAllRemoteReaders);
+                RTPSMessageGroup group(
+                            mp_RTPSParticipant,
+                            this,
+                            RTPSMessageGroup::WRITER,
+                            m_cdrmessages,
+                            mAllShrinkedLocatorList,
+                            mAllRemoteReaders);
 
                 if (!group.add_data(*cptr, mAllRemoteReaders, mAllShrinkedLocatorList, false))
                 {
@@ -115,7 +134,9 @@ void StatelessWriter::unsent_change_added_to_history(CacheChange_t* cptr)
         else
         {
             for (auto& reader_locator : reader_locators)
+            {
                 reader_locator.unsent_changes.push_back(ChangeForReader_t(cptr));
+            }
             AsyncWriterThread::wakeUp(this);
         }
     }

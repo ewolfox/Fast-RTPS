@@ -40,9 +40,17 @@ class StatelessWriter : public RTPSWriter
 {
     friend class RTPSParticipantImpl;
 
-    protected:
-    StatelessWriter(RTPSParticipantImpl*,GUID_t& guid,WriterAttributes& att,WriterHistory* hist,WriterListener* listen=nullptr);
-    public:
+protected:
+
+    StatelessWriter(
+            RTPSParticipantImpl*,
+            GUID_t& guid,
+            WriterAttributes& att,
+            WriterHistory* hist,
+            WriterListener* listen=nullptr);
+
+public:
+
     virtual ~StatelessWriter();
     /**
      * Add a specific change to all ReaderLocators.
@@ -90,8 +98,10 @@ class StatelessWriter : public RTPSWriter
 
     bool add_locator(Locator_t& loc);
 
-    void update_unsent_changes(ReaderLocator& reader_locator,
-            const SequenceNumber_t& seqNum, const FragmentNumber_t fragNum);
+    void update_unsent_changes(
+            ReaderLocator& reader_locator,
+            const SequenceNumber_t& seqNum,
+            const FragmentNumber_t fragNum);
 
     //!Reset the unsent changes.
     void unsent_changes_reset();
@@ -104,13 +114,15 @@ class StatelessWriter : public RTPSWriter
 
     bool is_acked_by_all(const CacheChange_t* a_change) const override;
 
-    bool try_remove_change(std::chrono::microseconds&, std::unique_lock<std::recursive_mutex>&) override { 
+    bool try_remove_change(
+            std::chrono::microseconds&,
+            std::unique_lock<std::recursive_mutex>&) override {
         return remove_older_changes(1); 
     }
 
     void add_flow_controller(std::unique_ptr<FlowController> controller) override;
 
-    private:
+private:
 
     std::vector<GUID_t> get_builtin_guid();
 

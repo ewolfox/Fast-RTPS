@@ -43,8 +43,10 @@ NackResponseDelay::~NackResponseDelay()
 NackResponseDelay::NackResponseDelay(
         StatefulWriter* writer,
         double millisec)
-    : TimedEvent(writer->getRTPSParticipant()->getEventResource().getIOService(),
-            writer->getRTPSParticipant()->getEventResource().getThread(), millisec)
+    : TimedEvent(
+          writer->getRTPSParticipant()->getEventResource().getIOService(),
+          writer->getRTPSParticipant()->getEventResource().getThread(),
+          millisec)
     , writer_(writer)
 {
 }
