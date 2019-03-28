@@ -282,7 +282,9 @@ bool ReaderProxy::mark_fragment_as_sent_for_change(const CacheChange_t* change, 
     return allFragmentsSent;
 }
 
-void ReaderProxy::convert_status_on_all_changes(ChangeForReaderStatus_t previous, ChangeForReaderStatus_t next)
+void ReaderProxy::convert_status_on_all_changes(
+        ChangeForReaderStatus_t previous,
+        ChangeForReaderStatus_t next)
 {
     assert(previous > next);
 

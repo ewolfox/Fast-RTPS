@@ -65,7 +65,9 @@ StatefulWriter::StatefulWriter(
     , may_remove_change_mutex_()
     , may_remove_change_cond_()
     , may_remove_change_(0)
-    , disableHeartbeatPiggyback_(att.disableHeartbeatPiggyback)
+    , disable_heartbeat_piggyback_(att.disable_heartbeat_piggyback)
+    , disable_positive_ACKs_(att.disable_positive_ACKs)
+    , keep_duration_ms_()
     , sendBufferSize_(pimpl->get_min_network_send_buffer_size())
     , currentUsageSendBufferSize_(static_cast<int32_t>(pimpl->get_min_network_send_buffer_size()))
     , m_controllers()
@@ -306,7 +308,10 @@ void StatefulWriter::send_any_unsent_changes()
                 if (unsentChange->isRelevant() && unsentChange->isValid())
                 {
                     // As we checked we are not async, we know we cannot have fragments
-                    if (group.add_data(*(unsentChange->getChange()), guids, remote_locators_shrinked,
+                    if (group.add_data(
+                                *(unsentChange->getChange()),
+                                guids,
+                                remote_locators_shrinked,
                                 remoteReader->m_att.expectsInlineQos))
                     {
                         if (is_reliable)
@@ -474,7 +479,7 @@ void StatefulWriter::send_any_unsent_changes()
                 }
 
                 // Heartbeat piggyback.
-                if (!disableHeartbeatPiggyback_)
+                if (!disable_heartbeat_piggyback_)
                 {
                     if (mp_history->isFull())
                     {
@@ -1009,7 +1014,7 @@ void StatefulWriter::send_heartbeat_piggyback_nts_(
         const LocatorList_t &locators,
         RTPSMessageGroup& message_group)
 {
-    if (!disableHeartbeatPiggyback_)
+    if (!disable_heartbeat_piggyback_)
     {
         if (mp_history->isFull())
         {

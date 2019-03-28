@@ -108,7 +108,9 @@ namespace eprosima
                  * @param previous Status to change.
                  * @param next Status to adopt.
                  */
-                void convert_status_on_all_changes(ChangeForReaderStatus_t previous, ChangeForReaderStatus_t next);
+                void convert_status_on_all_changes(
+                        ChangeForReaderStatus_t previous,
+                        ChangeForReaderStatus_t next);
 
                 //void setNotValid(const CacheChange_t* change);
                 void setNotValid(CacheChange_t* change);

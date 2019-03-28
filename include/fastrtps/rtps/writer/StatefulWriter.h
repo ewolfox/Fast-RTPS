@@ -108,7 +108,9 @@ public:
      * @param[out] RP Pointer to pointer to return the ReaderProxy.
      * @return True if correct.
      */
-    bool matched_reader_lookup(GUID_t& readerGuid,ReaderProxy** RP);
+    bool matched_reader_lookup(
+            GUID_t& readerGuid,
+            ReaderProxy** RP);
 
     /** Get count of heartbeats
      * @return count of heartbeats
@@ -219,7 +221,12 @@ private:
     std::condition_variable may_remove_change_cond_;
     unsigned int may_remove_change_;
 
-    bool disableHeartbeatPiggyback_;
+    //! True to disable piggyback heartbeats
+    bool disable_heartbeat_piggyback_;
+    //! True to disable positive ACKs
+    bool disable_positive_ACKs_;
+    //! Keep duration for disable positive ACKs QoS, in milliseconds
+    double keep_duration_ms_;
 
     const uint32_t sendBufferSize_;
 
