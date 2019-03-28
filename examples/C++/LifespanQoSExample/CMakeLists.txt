@@ -18,7 +18,7 @@ if(NOT CMAKE_VERSION VERSION_LESS 3.0)
     cmake_policy(SET CMP0048 NEW)
 endif()
 
-project(DeadlineQoSExample)
+project(LifespanQoSExample)
 
 # Find requirements
 if(NOT fastcdr_FOUND)
@@ -27,21 +27,6 @@ endif()
 
 if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
-endif()
-
-if(NOT Asio_FOUND)
-    find_package(Asio QUIET)
-
-    if(Asio_FOUND)
-        message(STATUS "Found Asio")
-    else()
-        find_path(ASIO_INCLUDE_DIR NAMES asio.hpp)
-        if(ASIO_INCLUDE_DIR)
-            message(STATUS "Found Asio in ${ASIO_INCLUDE_DIR}")
-        else()
-            message(FATAL_ERROR "Asio not found!")
-        endif()
-    endif()
 endif()
 
 # Set C++11
@@ -56,22 +41,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
     endif()
 endif()
 
-message(STATUS "Configuring DeadlineQoS example...")
-file(GLOB DEADLINEQOS_EXAMPLE_SOURCES "*.cxx")
+message(STATUS "Configuring HelloWorld example...")
+file(GLOB HELLOWORLD_EXAMPLE_SOURCES_CXX "*.cxx")
+file(GLOB HELLOWORLD_EXAMPLE_SOURCES_CPP "*.cpp")
 
-add_definitions(
-  -DBOOST_ASIO_STANDALONE
-  -DASIO_STANDALONE
-)
-
-include_directories(${ASIO_INCLUDE_DIR})
-
-add_executable(DeadlineQoSExample ${DEADLINEQOS_EXAMPLE_SOURCES})
-target_link_libraries(DeadlineQoSExample fastrtps fastcdr)
-if(UNIX)
-  target_link_libraries(DeadlineQoSExample pthread)
-endif()
-
-install(TARGETS DeadlineQoSExample
-    RUNTIME DESTINATION examples/C++/DeadlineQoSExample/${BIN_INSTALL_DIR}
-    )
+add_executable(LifespanQoSExample ${HELLOWORLD_EXAMPLE_SOURCES_CXX} ${HELLOWORLD_EXAMPLE_SOURCES_CPP})
+target_link_libraries(LifespanQoSExample fastrtps fastcdr)
+install(TARGETS LifespanQoSExample
+    RUNTIME DESTINATION examples/C++/LifespanQoSExample/${BIN_INSTALL_DIR})
