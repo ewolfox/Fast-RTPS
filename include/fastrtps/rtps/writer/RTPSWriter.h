@@ -46,11 +46,18 @@ class RTPSWriter : public Endpoint
     friend class WriterHistory;
     friend class RTPSParticipantImpl;
     friend class RTPSMessageGroup;
-    protected:
-    RTPSWriter(RTPSParticipantImpl*,GUID_t& guid,WriterAttributes& att,WriterHistory* hist,WriterListener* listen=nullptr);
+
+protected:
+
+    RTPSWriter(
+            RTPSParticipantImpl*,
+            GUID_t& guid,
+            WriterAttributes& att,
+            WriterHistory* hist,
+            WriterListener* listen=nullptr);
     virtual ~RTPSWriter();
 
-    public:
+public:
 
     /**
      * Create a new change based with the provided changeKind.
@@ -184,7 +191,7 @@ class RTPSWriter : public Endpoint
      */
     bool get_separate_sending () const { return m_separateSendingEnabled; }
 
-    protected:
+protected:
 
     //!Is the data sent directly or announced by HB and THEN send to the ones who ask for it?.
     bool m_pushMode;
@@ -232,7 +239,7 @@ class RTPSWriter : public Endpoint
     bool encrypt_cachechange(CacheChange_t* change);
 #endif
 
-    private:
+private:
 
     RTPSWriter& operator=(const RTPSWriter&) = delete;
 };

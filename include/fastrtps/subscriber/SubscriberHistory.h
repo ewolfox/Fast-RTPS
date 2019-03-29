@@ -137,7 +137,9 @@ class SubscriberHistory: public rtps::ReaderHistory
         void * mp_getKeyObject;
 
 
-        bool find_Key(rtps::CacheChange_t* a_change,t_v_Inst_Caches::iterator* vecPairIterrator);
+        bool find_Key(
+                rtps::CacheChange_t* a_change,
+                t_v_Inst_Caches::iterator* vecPairIterrator);
 };
 
 } /* namespace fastrtps */

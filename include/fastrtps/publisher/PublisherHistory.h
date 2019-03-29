@@ -38,7 +38,7 @@ class PublisherImpl;
  * This class is created by the PublisherImpl and should not be used by the user directly.
  * @ingroup FASTRTPS_MODULE
  */
-class PublisherHistory:public rtps::WriterHistory
+class PublisherHistory : public rtps::WriterHistory
 {
     public:
         typedef std::pair<rtps::InstanceHandle_t,std::vector<rtps::CacheChange_t*>> t_p_I_Change;
@@ -67,7 +67,9 @@ class PublisherHistory:public rtps::WriterHistory
          * @param wparams
          * @return True if added.
          */
-        bool add_pub_change(rtps::CacheChange_t* change, rtps::WriteParams &wparams,
+        bool add_pub_change(
+                rtps::CacheChange_t* change,
+                rtps::WriteParams &wparams,
                 std::unique_lock<std::recursive_mutex>& lock);
 
         /**
@@ -89,7 +91,9 @@ class PublisherHistory:public rtps::WriterHistory
          * @param vit Pointer to the iterator of the Keyed history vector.
          * @return True if removed.
          */
-        bool remove_change_pub(rtps::CacheChange_t* change,t_v_Inst_Caches::iterator* vit=nullptr);
+        bool remove_change_pub(
+                rtps::CacheChange_t* change,
+                t_v_Inst_Caches::iterator* vit=nullptr);
 
         virtual bool remove_change_g(rtps::CacheChange_t* a_change);
 
@@ -103,7 +107,9 @@ class PublisherHistory:public rtps::WriterHistory
         //!Publisher Pointer
         PublisherImpl* mp_pubImpl;
 
-        bool find_Key(rtps::CacheChange_t* a_change,t_v_Inst_Caches::iterator* vecPairIterrator);
+        bool find_Key(
+                rtps::CacheChange_t* a_change,
+                t_v_Inst_Caches::iterator* vecPairIterrator);
 };
 
 } /* namespace fastrtps */

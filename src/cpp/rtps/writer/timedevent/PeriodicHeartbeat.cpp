@@ -45,10 +45,13 @@ PeriodicHeartbeat::~PeriodicHeartbeat()
 PeriodicHeartbeat::PeriodicHeartbeat(
         StatefulWriter* p_SFW,
         double interval)
-    : TimedEvent(p_SFW->getRTPSParticipant()->getEventResource().getIOService(),
-            p_SFW->getRTPSParticipant()->getEventResource().getThread(), interval)
-    , m_cdrmessages(p_SFW->getRTPSParticipant()->getMaxMessageSize(),
-            p_SFW->getRTPSParticipant()->getGuid().guidPrefix)
+    : TimedEvent(
+          p_SFW->getRTPSParticipant()->getEventResource().getIOService(),
+          p_SFW->getRTPSParticipant()->getEventResource().getThread(),
+          interval)
+    , m_cdrmessages(
+          p_SFW->getRTPSParticipant()->getMaxMessageSize(),
+          p_SFW->getRTPSParticipant()->getGuid().guidPrefix)
     , mp_SFW(p_SFW)
 {
 
@@ -75,8 +78,7 @@ void PeriodicHeartbeat::event(
             {
                 if ((*it)->thereIsUnacknowledged())
                 {
-                    // FinalFlag is always false because this class is used only by StatefulWriter in Reliable.
-                    mp_SFW->send_heartbeat_to_nts(**it, false);
+                    mp_SFW->send_heartbeat_to_nts(**it);
                     unacked_changes = true;
                 }
             }
@@ -130,8 +132,15 @@ void PeriodicHeartbeat::event(
                 RTPSMessageGroup group(mp_SFW->getRTPSParticipant(), mp_SFW, RTPSMessageGroup::WRITER, m_cdrmessages);
 
                 // FinalFlag is always false because this class is used only by StatefulWriter in Reliable.
-                group.add_heartbeat(remote_readers, firstSeq, lastSeq, heartbeatCount, false, false,
-                        mp_SFW->getRTPSParticipant()->network_factory().ShrinkLocatorLists(locList));
+                group.add_heartbeat(
+                            remote_readers,
+                            firstSeq,
+                            lastSeq,
+                            heartbeatCount,
+                            false,
+                            false,
+                            mp_SFW->getRTPSParticipant()->network_factory().ShrinkLocatorLists(locList));
+
                 logInfo(RTPS_WRITER, mp_SFW->getGuid().entityId << " Sending Heartbeat (" << firstSeq
                         << " - " << lastSeq << ")");
             }

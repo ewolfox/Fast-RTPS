@@ -256,19 +256,21 @@ bool PublisherHistory::remove_change_pub(CacheChange_t* change,t_v_Inst_Caches::
     else
     {
         t_v_Inst_Caches::iterator vit;
-        if(vit_in!=nullptr)
+        if(vit_in != nullptr)
+        {
             vit = *vit_in;
+        }
         else if(this->find_Key(change,&vit))
         {
 
         }
         else
-            return false;
-        for(auto chit = vit->second.begin();
-                chit!= vit->second.end();++chit)
         {
-            if( ((*chit)->sequenceNumber == change->sequenceNumber)
-                    && ((*chit)->writerGUID == change->writerGUID) )
+            return false;
+        }
+        for(auto chit = vit->second.begin(); chit!= vit->second.end(); ++chit)
+        {
+            if( ((*chit)->sequenceNumber == change->sequenceNumber) && ((*chit)->writerGUID == change->writerGUID) )
             {
                 if(remove_change(change))
                 {
