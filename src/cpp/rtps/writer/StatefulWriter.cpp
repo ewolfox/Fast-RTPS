@@ -70,7 +70,7 @@ StatefulWriter::StatefulWriter(
     , may_remove_change_(0)
     , disable_heartbeat_piggyback_(att.disable_heartbeat_piggyback)
     , disable_positive_ACKs_(att.disable_positive_ACKs)
-    , keep_duration_us_(att.keep_duration_.to_ns() * 1e-6)
+    , keep_duration_us_(att.keep_duration_.to_ns() * 1e-3)
     , lifespan_timer_(nullptr)
     , sendBufferSize_(pimpl->get_min_network_send_buffer_size())
     , currentUsageSendBufferSize_(static_cast<int32_t>(pimpl->get_min_network_send_buffer_size()))
@@ -104,7 +104,7 @@ StatefulWriter::StatefulWriter(
     {
         lifespan_timer_ = new TimedCallback(
                     std::bind(&StatefulWriter::lifespan_expired, this),
-                    att.keep_duration_.to_ns() * 1e-6,
+                    att.keep_duration_.to_ns() * 1e-6, // in milliseconds
                     pimpl->getUserRTPSParticipant()->get_resource_event().getIOService(),
                     pimpl->getUserRTPSParticipant()->get_resource_event().getThread());
     }
@@ -252,6 +252,11 @@ void StatefulWriter::unsent_change_added_to_history(CacheChange_t* change)
                 changeForReader.setRelevance((*it)->rtps_is_relevant(change));
                 (*it)->addChange(changeForReader);
             }
+        }
+
+        if (disable_positive_ACKs_)
+        {
+            lifespan_timer_->restart_timer();
         }
     }
     else

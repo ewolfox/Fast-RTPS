@@ -39,10 +39,10 @@ namespace fastrtps{
 class PublisherAttributes
 {
 public:
-    PublisherAttributes() :
-        historyMemoryPolicy(rtps::PREALLOCATED_MEMORY_MODE),
-        m_userDefinedID(-1),
-        m_entityID(-1)
+    PublisherAttributes()
+        : historyMemoryPolicy(rtps::PREALLOCATED_MEMORY_MODE)
+        , m_userDefinedID(-1)
+        , m_entityID(-1)
     {}
 
     virtual ~PublisherAttributes(){}
@@ -78,6 +78,8 @@ public:
     //!Underlying History memory policy
     rtps::MemoryManagementPolicy_t historyMemoryPolicy;
     rtps::PropertyPolicy properties;
+    //!Disable positive ACKs QoS
+    DisablePositiveACKsQosPolicy disablePositiveACKs;
 
     /**
      * Get the user defined ID
