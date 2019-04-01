@@ -137,7 +137,7 @@ void PeriodicHeartbeat::event(
                             firstSeq,
                             lastSeq,
                             heartbeatCount,
-                            false,
+                            mp_SFW->get_disable_positive_ACKs(),
                             false,
                             mp_SFW->getRTPSParticipant()->network_factory().ShrinkLocatorLists(locList));
 
