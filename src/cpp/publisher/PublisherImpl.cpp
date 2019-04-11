@@ -34,7 +34,7 @@
 #include <fastrtps/rtps/resources/ResourceEvent.h>
 
 using namespace eprosima::fastrtps;
-using namespace ::rtps;
+using namespace eprosima::fastrtps::rtps;
 
 using namespace std::chrono;
 
