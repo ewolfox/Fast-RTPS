@@ -365,7 +365,7 @@ class PubSubReader
             return *this;
         }
 
-        PubSubReader& lifespan_period(const eprosima::fastrtps::rtps::Duration_t lifespan_period)
+        PubSubReader& lifespan_period(const eprosima::fastrtps::Duration_t lifespan_period)
         {
             subscriber_attr_.qos.m_lifespan.duration = lifespan_period;
             return *this;

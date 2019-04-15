@@ -80,7 +80,7 @@ public:
 	bool takeNextData(void* data,SampleInfo_t* info);
 
 	///@}
-	
+
 	/**
 	 * Update the Attributes of the subscriber;
 	 * @param att Reference to a SubscriberAttributes object to update the parameters;
@@ -125,7 +125,7 @@ public:
      * @param change The cache change that has been added
      * @return True if the change has not expired due to lifespan QoS
      */
-    bool onNewCacheChangeAdded(const CacheChange_t * const change);
+    bool onNewCacheChangeAdded(const rtps::CacheChange_t * const change);
 
 private:
 	//!Participant

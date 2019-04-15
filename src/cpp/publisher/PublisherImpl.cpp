@@ -195,7 +195,7 @@ bool PublisherImpl::create_new_change_with_params(
                 return false;
             }
 
-            if (m_att.qos.m_lifespan.duration != rtps::c_TimeInfinite)
+            if (m_att.qos.m_lifespan.duration != c_TimeInfinite)
             {
                 lifespan_timer_.restart_timer();
             }
@@ -336,12 +336,6 @@ void PublisherImpl::PublisherWriterListener::onWriterChangeReceivedByAll(
     {
         mp_publisherImpl->m_history.remove_change_g(ch);
     }
-}
-
-bool PublisherImpl::try_remove_change(std::unique_lock<std::recursive_mutex>& lock)
-{
-    std::chrono::microseconds max_w(TimeConv::Duration_t2MicroSecondsInt64(m_att.qos.m_reliability.max_blocking_time));
-    return mp_writer->try_remove_change(max_w, lock);
 }
 
 bool PublisherImpl::wait_for_all_acked(const Time_t& max_wait)
