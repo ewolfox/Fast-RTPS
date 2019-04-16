@@ -13,7 +13,7 @@ CMAKE_EXECUTABLE=$SDK_PATH/cmake/3.10.2.4988404/bin/cmake
 TOOLCHAIN_PATH=$NDK_PATH/build/cmake/android.toolchain.cmake
 
 # Declare ABIs to build for
-declare -a arr=( "armeabi-v7a" "arm64-v8a" "x86" "x86_64" "mips" "mips64" )
+declare -a arr=( "armeabi-v7a" "arm64-v8a" )
 
 for ABI in "${arr[@]}"
 do
@@ -42,7 +42,7 @@ do
 
 	# Copy artifacts to dist folder
 	cp install/lib/libfastrtps.so $DIR/dist/lib/${ABI}/
-	cp external/install/lib/libfastcdr.so $DIR/dist/lib/${ABI}/
+	cp install/lib/libfastcdr.so $DIR/dist/lib/${ABI}/
 
 	# Move back to main directory
 	cd $DIR
